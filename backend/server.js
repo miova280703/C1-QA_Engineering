@@ -83,7 +83,18 @@ app.post('/api/transfer', async (req, res) => {
   const { target, amount, simulationProfile, speedFactor } = req.body;
   const transactionId = 'TX-' + Date.now();
   const createdAt = Date.now();
-  const normalizedProfile = String(simulationProfile || 'RANDOM').toUpperCase();
+  //Se modifica la manera de obtener el perfil de simulación para que sea aleatorio entre las opciones disponibles, esto con el fin de probar los distintos escenarios de procesamiento de transacciones.
+  let normalizedProfile;
+  
+  if (simulationProfile) {
+    normalizedProfile = String(simulationProfile).toUpperCase();
+  } else {
+    const opcionesOpcionales = ['RANDOM', 'FAST_5'];
+    const indiceAleatorio = Math.floor(Math.random() * opcionesOpcionales.length);
+    normalizedProfile = opcionesOpcionales[indiceAleatorio];
+  }
+  //Esta opción tarda más de 10 segundos en procesar la transacción
+  //const normalizedProfile = String(simulationProfile || 'RANDOM').toUpperCase();
 
   // Guardar estado inicial en la base de datos (db.json)
   const db = JSON.parse(fs.readFileSync(DB_PATH));

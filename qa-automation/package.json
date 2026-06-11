@@ -1,0 +1,27 @@
+{
+  "name": "c1-qa_engineering",
+  "version": "1.0.0",
+  "description": "QA Engineering: TestOps, Observabilidad y Arquitectura de Pruebas",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:report": "playwright show-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miova280703/C1-QA_Engineering.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/miova280703/C1-QA_Engineering/issues"
+  },
+  "homepage": "https://github.com/miova280703/C1-QA_Engineering#readme",
+  "devDependencies": {
+    "@faker-js/faker": "^10.4.0",
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.3"
+  }
+}

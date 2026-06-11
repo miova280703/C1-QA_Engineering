@@ -59,32 +59,6 @@ services:
     restart: "no"
     networks:
       - qa-network
-  
-  web-server:
-    build: ./backend
-    container_name: qa-web-server
-    ports:
-      - "3000:3000"
-    restart: always
-    networks:
-      - qa-network
-
-  web-worker:
-    build: ./backend
-    command: npm run start-worker
-    container_name: qa-web-worker
-    restart: always
-    networks:
-      - qa-network
-  
-  web-frontend:
-    build: ./frontend
-    container_name: qa-web-frontend
-    ports:
-      - "80:80"
-    restart: always
-    networks:
-      - qa-network
 
 networks:
   qa-network:

@@ -19,6 +19,7 @@ function randomBetween(min, max) {
 
 function resolveSimulation(simulationProfile) {
   const profile = String(simulationProfile || 'RANDOM').toUpperCase();
+  console.log(` Resolviendo simulación para profile: ${simulationProfile}`);
 
   switch (profile) {
     case 'FAST_5':
