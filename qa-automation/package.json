@@ -6,7 +6,8 @@
   "scripts": {
     "test": "playwright test",
     "test:headed": "playwright test --headed",
-    "test:report": "playwright show-report"
+    "test:report": "playwright show-report",
+    "install:browsers:ci": "playwright install --with-deps"
   },
   "repository": {
     "type": "git",

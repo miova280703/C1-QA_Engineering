@@ -47,6 +47,7 @@ jobs:
       run: |
         cd qa-automation
         npm ci   
+        npm run install:browsers:ci
 
     - name: 9. Ejecutar pruebas Playwright
       run: |
