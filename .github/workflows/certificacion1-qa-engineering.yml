@@ -46,7 +46,7 @@ jobs:
     
     - name: 8. Ejecutar frontend en segundo plano
       run: |
-          cd tests
+          cd frontend
           npm run dev
 
     - name: 9. Ejecutar pruebas Playwright
