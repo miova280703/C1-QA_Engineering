@@ -20,39 +20,45 @@ jobs:
         docker compose up -d
           echo "Esperando que Kafka-Broker esté listo..."
           timeout 120 bash -c 'until docker compose exec -T kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server kafka:29092 --list >/dev/null 2>&1; do sleep 2; done'
-    
     - name: 4. Instalar backend
       run: |
         cd backend
         npm ci
-
-    - name: 5. Instalar frontend
-      run: |
-        cd frontend
-        npm ci
-    
-    - name: 6. Instalar playwright 
-      run: |
-        cd qa-automation
-        npm ci
-    
-    - name: 7. Lanzar Aplicación y Consumidor en Segundo Plano
+    - name: 5. Lanzar Aplicación y Consumidor en Segundo Plano
       run: |
           cd backend
           npm run start-server > server.log 2>&1 &
           npm run start-worker > worker.log 2>&1 &
           echo "Esperando endpoint de salud del backend..."
           timeout 120 bash -c 'until curl -fsS http://localhost:3000/health >/dev/null; do sleep 2; done'
-    
-    - name: 8. Ejecutar frontend en segundo plano
+    - name: 6. Instalar frontend
       run: |
-          cd frontend
-          npm run dev
+        cd frontend
+        npm ci
+    - name: 7. Ejecutar frontend en segundo plano
+      run: |
+        cd frontend
+        npm run dev > frontend.log 2>&1 &
+        echo "Esperando a que el frontend esté listo..."
+        # Espera activa: asumiendo que tu frontend corre en el puerto 5173 (común en Vite) o 3000
+        timeout 60 bash -c 'until curl -fsS http://localhost:5173 >/dev/null 2>&1; do sleep 2; done'
+    
+    - name: 8. Instalar playwright 
+      run: |
+        cd qa-automation
+        npm ci   
 
     - name: 9. Ejecutar pruebas Playwright
       run: |
-          cd tests
-          npm run test
+        cd qa-automation
+        npm run test
+    - name: 10. Subir reportes de Playwright como artefactos
+      uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report
+        path: qa-automation/playwright-report/
+        retention-days: 30 
 
     # - name: Install Playwright Browsers
     #   run: npx playwright install --with-deps
