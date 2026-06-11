@@ -35,7 +35,6 @@ jobs:
       run: |
         cd qa-automation
         npm ci
-        npm run install:browsers:ci
     
     - name: 7. Lanzar Aplicación y Consumidor en Segundo Plano
       run: |
