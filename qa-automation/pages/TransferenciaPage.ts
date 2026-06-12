@@ -1,4 +1,4 @@
-import {Locator, Page, expect} from '@playwright/test';
+import {Locator, Page, expect, test} from '@playwright/test';
 
 export class TransferenciaPage {  
     readonly page: Page;
@@ -19,13 +19,23 @@ export class TransferenciaPage {
         await this.page.goto('http://localhost:5173/');
     }
 
-    async realizarTransferencia(cuentaDestino: string, monto: string) {
+    async realizarTransferencia(cuentaDestino: string, monto: string){
         await this.inputCuentaDestino.fill(cuentaDestino);
         await this.inputMonto.fill(monto);
         await this.btnEnviar.click();
+        const screenshot = await this.page.screenshot();
+        await test.info().attach('evidencia-transferencia', {
+            body: screenshot,
+            contentType: 'image/png',
+        });
     }
 
     async verificarMensajeAprobacion() {
         await expect(this.divMensaje).toHaveText('Estado: APROBADO', { timeout: 10000 });
+        const screenshot = await this.page.screenshot();
+        await test.info().attach('evidencia-transferencia-estado', {
+            body: screenshot,
+            contentType: 'image/png',
+        });
     }
 }
