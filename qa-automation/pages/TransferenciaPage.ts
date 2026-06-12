@@ -38,4 +38,4 @@ export class TransferenciaPage {
             contentType: 'image/png',
         });
     }
-}
+} 
